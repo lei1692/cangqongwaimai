@@ -21,7 +21,7 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-//    todo 自己修改，传递msg 登录成功
+//     自己修改，传递msg 登录成功
     public static <T> Result<T> success(T object,String msg) {
         Result<T> result = new Result<T>();
         result.data = object;
@@ -30,7 +30,7 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-//    todo 登录失败
+//     登录失败
     public static <T> Result<T> error(String msg) {
         Result result = new Result();
         result.msg = msg;

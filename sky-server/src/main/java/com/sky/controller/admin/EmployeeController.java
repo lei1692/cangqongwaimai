@@ -85,8 +85,7 @@ public class EmployeeController {
         log.info("新增员工：{}", employeeDTO);
         employeeService.save(employeeDTO);
 
-
-        return Result.success();
+        return Result.success(employeeDTO, MessageConstant.EMPLOYEE_SAVE_SUCCESS);
     }
 
 }
