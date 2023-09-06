@@ -104,4 +104,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageResult pageResult = new PageResult(total, result);
         return pageResult;
     }
+
+    @Override
+    public void startOrStop(Integer status,Long id) {
+        Employee employee = Employee.builder().id(id).status(status).build();
+        employeeMapper.update(employee);
+    }
 }
