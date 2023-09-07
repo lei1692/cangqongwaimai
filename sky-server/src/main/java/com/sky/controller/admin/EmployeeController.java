@@ -1,11 +1,13 @@
 package com.sky.controller.admin;
 
+import com.sky.annotation.AutoFill;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.constant.MessageConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
+import com.sky.enumeration.OperationType;
 import com.sky.properties.JwtProperties;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
@@ -17,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -105,6 +108,7 @@ public class EmployeeController {
      * @param id
      * @return
      */
+    @AutoFill(Value = OperationType.UPDATE)
     @ApiOperation("根据id修改状态")
     @PostMapping("/status/{status}")
     public Result startOrStop(@PathVariable("status") Integer status,Long id){
