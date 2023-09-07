@@ -17,6 +17,8 @@ mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.sky.entity
+  global-config:
+    column-underline: true
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
