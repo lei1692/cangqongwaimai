@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class SetmealController {
     @Autowired
     private SetmealService setmealService;
+
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
     @PostMapping
     @ApiOperation("新增套餐")
     public Result save(@RequestBody SetmealDTO setmealDTO){
@@ -30,6 +36,11 @@ public class SetmealController {
         return Result.success(MessageConstant.POST_SETMEAL_SUCCESS);
     }
 
+    /**
+     * 分页查询套餐
+     * @param setmealPageQueryDTO
+     * @return
+     */
     @GetMapping("/page")
     @ApiOperation("分页查询套餐")
     public Result page(SetmealPageQueryDTO setmealPageQueryDTO){
@@ -38,6 +49,11 @@ public class SetmealController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询套餐")
     public Result getById(@PathVariable Long id){
@@ -46,4 +62,40 @@ public class SetmealController {
         return Result.success(setmealVO,"根据id查询套餐成功");
     }
 
+    /**
+     * 根据id删除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("根据id删除套餐")
+    public Result delete(@RequestParam Long[] ids){
+        log.info("根据id删除套餐：{}", ids);
+        setmealService.delete(ids);
+        return Result.success(MessageConstant.DELETE_SETMEAL_SUCCESS);
+    }
+
+    /**
+     * 修改套餐状态
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("修改套餐状态")
+    public Result updateStatus(@PathVariable Integer status, Long id){
+        log.info("修改套餐状态：id:{} status:{}", id,status);
+        setmealService.updateStatus(id,status);
+        return Result.success(MessageConstant.UPDATE_SETMEAL_STATUS_SUCCESS);
+    }
+
+    @PutMapping
+    @ApiOperation("修改套餐")
+    public Result update(@RequestBody SetmealDTO setmealDTO){
+        log.info("修改套餐：{}", setmealDTO);
+        setmealService.update(setmealDTO);
+        return Result.success(MessageConstant.UPDATE_SETMEAL_SUCCESS);
+    }
+
 }
+

@@ -6,8 +6,10 @@ package com.sky.constant;
 public class MessageConstant {
 
     public static final String PASSWORD_ERROR = "密码错误";
+    public static final String UPDATE_SETMEAL_SUCCESS = "修改套餐成功";
     public static final String EMPLOYEE_SAVE_SUCCESS = "新增员工成功";
     public static final String ACCOUNT_NOT_FOUND = "账号不存在";
+    public static final String UPDATE_SETMEAL_STATUS_SUCCESS = "修改套餐状态成功";
     public static final String ALREADY_EXISTS = "已存在";
     public static final String ACCOUNT_LOCKED = "账号被锁定";
     public static final String UNKNOWN_ERROR = "未知错误";
@@ -28,5 +30,6 @@ public class MessageConstant {
     public static final String ORDER_STATUS_ERROR = "订单状态错误";
     public static final String ORDER_NOT_FOUND = "订单不存在";
     public static final String PAGE_QUERY_SECCESS = "分页查询成功";
+    public static final String DELETE_SETMEAL_SUCCESS = "删除套餐成功";
 
 }
