@@ -62,6 +62,7 @@ public class AotuFillAspect {
                 e.printStackTrace();
             }
         }
+        log.info("entity:{}",entity);
 
     }
 }
