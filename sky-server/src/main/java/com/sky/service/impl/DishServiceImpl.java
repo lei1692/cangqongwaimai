@@ -133,6 +133,11 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    /**
+     * 根据id修改状态
+     * @param status
+     * @param id
+     */
     @Override
     public void startOrStop(Integer status, Long id) {
         Dish dish = new Dish().builder()
@@ -140,5 +145,11 @@ public class DishServiceImpl implements DishService {
                 .status(status)
                 .build();
         dishMapper.update(dish);
+    }
+
+    @Override
+    public List<Dish> list(Long categoryId) {
+         List<Dish> dishList = dishMapper.list(categoryId);
+        return dishList;
     }
 }
