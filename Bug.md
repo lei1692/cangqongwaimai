@@ -16,6 +16,11 @@
 ![loading failed](https://raw.githubusercontent.com/lei1692/typora/main/image/202309081339943.png)  
 不太理解为什么在浏览器直接打开url是下载，而在html中引用却是显示图片
 
+### 公共填充字段
+虽然使用了公共填充，但是在mapper中还是要手动填充，否则会报错
+因为自动填充是给实体类的属性赋值，而mapper是需要给数据库中的字段赋值，如果不赋值，公共填充就没有意义了，所以要手动填充  
+### 分页查询时，使用if判断
+使用if判断，如果参数是Integer，不要写 **test="status != null && status!=''"**  
 
 
 
