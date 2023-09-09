@@ -15,5 +15,5 @@ sky:
     host: 175.24.201.135
     port: 6379
     password: 123456
-    database: 5
+    database: 0
 
