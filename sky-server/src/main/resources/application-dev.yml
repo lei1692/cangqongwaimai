@@ -11,3 +11,9 @@ sky:
     access-key-id: LTAI5t7hBcVD5bXf4PFt49ee
     access-key-secret: kQfjuLNofgf4yYQxa7Z6iuHVtXZNVu
     bucket-name: lwf-sky-take-out
+  redis:
+    host: 175.24.201.135
+    port: 6379
+    password: 123456
+    database: 5
+
