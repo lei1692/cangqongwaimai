@@ -32,7 +32,14 @@ spring:
 ### 方法参数类型字符串的必需URI模板变量'page'不存在  
 ![loading failed](https://raw.githubusercontent.com/lei1692/typora/main/image/202309120158721.png)  
 ![loading failed](https://raw.githubusercontent.com/lei1692/typora/main/image/202309120159881.png)  
-**可能传输多个参数**
+**可能传输多个参数**  
+直接把传递过来的多个参数封装为一个对象，不需要加注解  
+
+### springboot中多次提示  在系统中发现了多个分页插件，请检查系统配置!
+知乎的一篇文章解释的很好 [为什么会出现多个分页插件](https://www.zhihu.com/question/330677156)  
+在PageHelperAutoConfiguration源码中，会自动扫描所有的分页插件，然后将其注入到容器中，所以如果有多个分页插件，就会报错  
+从源码中可以看出两次自动配置会加入了两个拦截器PageInterceptor，所以才会提示“多个插件”；  
+- 解决方法：在@SpringBootApplication(exclude = PageHelperAutoConfiguration.class)中排除PageHelperAutoConfiguration.class
 
 
 
