@@ -34,7 +34,7 @@ public interface OrderMapper {
 
     Page<OrderPageVo> getOrderPage4User(Long userId, String status);
 
-    @Select("select * from orders where id = #{orderId}")
+    @Select("select * from orders where id = #{orderId} || number = #{orderId}")
     OrderPageVo getByOrderId(Long orderId);
 
     @Update("update orders set status = 6 where id = #{orderId}")

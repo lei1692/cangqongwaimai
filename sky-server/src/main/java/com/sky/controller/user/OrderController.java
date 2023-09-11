@@ -1,5 +1,6 @@
 package com.sky.controller.user;
 
+import com.alibaba.fastjson.JSON;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.result.PageResult;
@@ -8,10 +9,14 @@ import com.sky.service.OrderService;
 import com.sky.vo.OrderPageVo;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.websocket.WebSocketServer;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author leiwenfeng
@@ -24,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     /**
      * 订单提交
@@ -53,6 +60,16 @@ public class OrderController {
                 .packageStr("packageStr")
                 .build();
         orderService.updateOrderStatusByOrderNumber(ordersPaymentDTO.getOrderNumber());
+
+        //消息提醒 type 1来订单 2 客户催单 orderID content
+        Map map = new HashMap();
+        map.put("type",1);
+        map.put("orderId",ordersPaymentDTO.getOrderNumber());
+        map.put("content","您有新的订单，请及时处理。订单号："+ordersPaymentDTO.getOrderNumber());
+
+        String jsonString = JSON.toJSONString(map);
+
+        webSocketServer.sendToAllClient(jsonString);
 
         return Result.success(orderPaymentVO);
     }
