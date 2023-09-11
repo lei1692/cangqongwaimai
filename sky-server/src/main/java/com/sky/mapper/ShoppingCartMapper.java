@@ -10,6 +10,8 @@ import java.util.List;
 public interface ShoppingCartMapper {
 
 
+     void sub(ShoppingCart shoppingCart) ;
+
     ShoppingCart getByDishId(ShoppingCart shoppingCart);
 
 

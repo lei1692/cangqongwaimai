@@ -55,6 +55,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartList;
     }
 
+    @Override
+    public void cleanAll() {
+        setmealMapper.cleanAll(BaseContext.getCurrentId());
+    }
+
+    @Override
+    public void sub(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .userId(BaseContext.getCurrentId())
+                .setmealId(shoppingCartDTO.getSetmealId())
+                .dishId(shoppingCartDTO.getDishId())
+                .dishFlavor(shoppingCartDTO.getDishFlavor())
+                .build();
+        shoppingCartMapper.sub(shoppingCart);
+    }
+
     private ShoppingCart setNameImageAmount(ShoppingCartDTO shoppingCartDTO){
         ShoppingCart shoppingCart = ShoppingCart.builder()
                 .dishFlavor(shoppingCartDTO.getDishFlavor())
