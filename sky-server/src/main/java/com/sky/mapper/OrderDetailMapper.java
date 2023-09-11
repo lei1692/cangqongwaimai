@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.sky.entity.OrderDetail;
+import com.sky.vo.OrderPageVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,4 +15,7 @@ public interface OrderDetailMapper {
 
     @Select("select * from order_detail where order_id = #{id}")
     List<OrderDetail> getByOrderId(Long id);
+
+    @Select("select * from order_detail where order_name = #{orderName}")
+    OrderPageVo getByOrderName(Long orderName);
 }

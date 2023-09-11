@@ -29,6 +29,10 @@ spring:
   cache:
     type: redis
 ```
+### 方法参数类型字符串的必需URI模板变量'page'不存在  
+![loading failed](https://raw.githubusercontent.com/lei1692/typora/main/image/202309120158721.png)  
+![loading failed](https://raw.githubusercontent.com/lei1692/typora/main/image/202309120159881.png)  
+**可能传输多个参数**
 
 
 

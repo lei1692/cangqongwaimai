@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
 import com.sky.vo.OrderPageVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -35,4 +36,13 @@ public interface OrderMapper {
 
     @Update("update orders set status = 6 where id = #{orderId}")
     void updateOrderStatusByOrderNumber6(Long orderId);
+
+
+    Page<OrderPageVo> conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer status);
+
+    @Select("select * from orders where id = #{id}")
+    Orders getById(Long id);
 }
