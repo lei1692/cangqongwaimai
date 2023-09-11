@@ -21,4 +21,6 @@ public interface ShoppingCartMapper {
 
     @Select("select * from shopping_cart where user_id = #{currentId}")
     List<ShoppingCart> getList(Long currentId);
+
+    void insertBatch(List<ShoppingCart> shoppingCartList);
 }

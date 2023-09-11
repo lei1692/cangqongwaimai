@@ -18,4 +18,6 @@ public interface ShoppingCartService {
     void cleanAll();
 
     void sub(ShoppingCartDTO shoppingCartDTO);
+
+    void insertBatch(List<ShoppingCart> shoppingCartList);
 }

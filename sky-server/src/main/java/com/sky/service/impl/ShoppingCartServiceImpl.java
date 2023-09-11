@@ -71,6 +71,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartMapper.sub(shoppingCart);
     }
 
+    @Override
+    public void insertBatch(List<ShoppingCart> shoppingCartList) {
+        shoppingCartMapper.insertBatch(shoppingCartList);
+    }
+
+
+
+
     private ShoppingCart setNameImageAmount(ShoppingCartDTO shoppingCartDTO){
         ShoppingCart shoppingCart = ShoppingCart.builder()
                 .dishFlavor(shoppingCartDTO.getDishFlavor())

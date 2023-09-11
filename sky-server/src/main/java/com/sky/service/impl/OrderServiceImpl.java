@@ -1,6 +1,8 @@
 package com.sky.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.OrdersPaymentDTO;
@@ -11,10 +13,12 @@ import com.sky.exception.OrderBusinessException;
 import com.sky.mapper.OrderDetailMapper;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.UserMapper;
+import com.sky.result.PageResult;
 import com.sky.service.AddressBookService;
 import com.sky.service.OrderService;
 import com.sky.service.ShoppingCartService;
 import com.sky.utils.WeChatPayUtil;
+import com.sky.vo.OrderPageVo;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
 import org.springframework.beans.BeanUtils;
@@ -151,6 +155,68 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateOrderStatusByOrderNumber(String orderNumber) {
         orderMapper.updateOrderStatusByOrderNumber(orderNumber);
+    }
+
+    @Override
+    public PageResult OrderPage4User(String pageStart, String pageSize, String status) {
+        //分页插件
+        PageHelper.startPage(Integer.parseInt(pageStart), Integer.parseInt(pageSize));
+
+        Long userId = BaseContext.getCurrentId();
+        Page<OrderPageVo> page = orderMapper.getOrderPage4User(userId, status);
+
+
+        page.forEach(OrderPageVo -> {
+            List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(OrderPageVo.getId());
+            OrderPageVo.setOrderDetailList(orderDetailList);
+        });
+        return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public OrderPageVo orderDetailByOrderId(Long orderId) {
+        OrderPageVo orderPageVO = orderMapper.getByOrderId(orderId);
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orderId);
+        orderPageVO.setOrderDetailList(orderDetailList);
+
+        return orderPageVO;
+    }
+
+    @Override
+    public void cancleByOrderId(Long orderId) {
+        orderMapper.updateOrderStatusByOrderNumber6(orderId);
+    }
+
+    @Override
+    @Transactional
+    public void repetitionByOrderId(Long orderId) {
+        OrderPageVo byOrderId = orderMapper.getByOrderId(orderId);
+        Orders orders = new Orders();
+        BeanUtils.copyProperties(byOrderId, orders);
+        orders.setOrderTime(LocalDateTime.now());
+        orders.setPayStatus(Orders.UN_PAID);
+        orders.setNumber(String.valueOf(System.currentTimeMillis()));
+        orders.setEstimatedDeliveryTime(LocalDateTime.now().plusHours(1));
+        orderMapper.insert(orders);
+
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orderId);
+        List<ShoppingCart> shoppingCartList = new ArrayList<>();
+
+        orderDetailList.forEach(orderDetail -> {
+            ShoppingCart shoppingCart = new ShoppingCart().builder()
+                    .userId(BaseContext.getCurrentId())
+                    .createTime(LocalDateTime.now())
+                    .name(orderDetail.getName())
+                    .dishId(orderDetail.getDishId())
+                    .setmealId(orderDetail.getSetmealId())
+                    .dishFlavor(orderDetail.getDishFlavor())
+                    .number(orderDetail.getNumber())
+                    .amount(orderDetail.getAmount())
+                    .image(orderDetail.getImage())
+                    .build();
+            shoppingCartList.add(shoppingCart);
+        });
+        shoppingCartService.insertBatch(shoppingCartList);
     }
 
 }

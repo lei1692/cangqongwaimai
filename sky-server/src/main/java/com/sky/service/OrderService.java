@@ -2,6 +2,8 @@ package com.sky.service;
 
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
+import com.sky.result.PageResult;
+import com.sky.vo.OrderPageVo;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
 
@@ -25,4 +27,12 @@ public interface OrderService {
     void paySuccess(String outTradeNo);
 
     void updateOrderStatusByOrderNumber(String orderNumber);
+
+    PageResult OrderPage4User(String page, String pageSize, String status);
+
+    OrderPageVo orderDetailByOrderId(Long orderId);
+
+    void cancleByOrderId(Long orderId);
+
+    void repetitionByOrderId(Long orderId);
 }
