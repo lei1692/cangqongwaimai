@@ -21,6 +21,14 @@
 因为自动填充是给实体类的属性赋值，而mapper是需要给数据库中的字段赋值，如果不赋值，公共填充就没有意义了，所以要手动填充  
 ### 分页查询时，使用if判断
 使用if判断，如果参数是Integer，不要写 **test="status != null && status!=''"**  
+### 使用注解@Cacheable进行 注解缓存
+1. 在启动类上添加注解@EnableCaching
+2. 必须在配置文件中指定缓存的类型，注解不会生效  
+```yml
+spring:
+  cache:
+    type: redis
+```
 
 
 
